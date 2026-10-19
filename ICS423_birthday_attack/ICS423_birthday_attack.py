@@ -38,7 +38,7 @@ def find_collision(algorithm_name, trial_number, bits):
 
     while True:
         message = (
-            f"{algorithm_name}_{bits}bit_"
+            f"{bits}bit_"
             f"trial{trial_number}_message{attempt}"
         )
 
@@ -54,7 +54,7 @@ def find_collision(algorithm_name, trial_number, bits):
 
 
 digest_lengths = [8, 12, 16, 20, 24]
-number_of_trials = 100
+number_of_trials = 1000
 
 summary_results = []
 
@@ -270,6 +270,131 @@ plt.savefig(
 print(
     "Graph saved to "
     "collision_comparison_all_algorithms.png"
+)
+
+plt.show()
+
+# --------------------------------------------------
+# Graph 2:
+# Log-scale collision comparison
+# --------------------------------------------------
+
+plt.figure(figsize=(10, 6))
+
+for algorithm_name in hash_functions:
+
+    algorithm_rows = [
+        row for row in summary_results
+        if row[0] == algorithm_name
+    ]
+
+    bits_values = [
+        row[1] for row in algorithm_rows
+    ]
+
+    experimental_averages = [
+        row[3] for row in algorithm_rows
+    ]
+
+    plt.plot(
+        bits_values,
+        experimental_averages,
+        marker="o",
+        label=algorithm_name
+    )
+
+
+plt.plot(
+    digest_lengths,
+    expected_values,
+    marker="s",
+    linestyle="--",
+    linewidth=2,
+    label="Theoretical Expected Mean"
+)
+
+plt.yscale("log", base=2)
+
+plt.xlabel("Truncated Hash Length (bits)")
+plt.ylabel("Average Attempts Until First Collision (Log Scale)")
+
+plt.title(
+    "Birthday Attack Collision Search "
+    "Across Hash Algorithms (Log Scale)"
+)
+
+plt.xticks(digest_lengths)
+plt.grid(True)
+plt.legend()
+
+plt.tight_layout()
+
+plt.savefig(
+    "collision_comparison_log_scale.png",
+    dpi=300
+)
+
+print(
+    "Graph saved to "
+    "collision_comparison_log_scale.png"
+)
+
+plt.show()
+
+# --------------------------------------------------
+# Graph 3:
+# Execution time by algorithm
+# --------------------------------------------------
+
+plt.figure(figsize=(10, 6))
+
+for algorithm_name in hash_functions:
+
+    algorithm_rows = [
+        row for row in summary_results
+        if row[0] == algorithm_name
+    ]
+
+    bits_values = [
+        row[1] for row in algorithm_rows
+    ]
+
+    execution_times = [
+        row[11] for row in algorithm_rows
+    ]
+
+    plt.plot(
+        bits_values,
+        execution_times,
+        marker="o",
+        label=algorithm_name
+    )
+
+
+plt.xlabel("Truncated Hash Length (bits)")
+plt.ylabel(
+    f"Execution Time for {number_of_trials} Trials (seconds)"
+)
+
+plt.title(
+    "Birthday Attack Execution Time "
+    "Across Hash Algorithms"
+)
+
+plt.xticks(digest_lengths)
+plt.grid(True)
+plt.legend()
+
+plt.tight_layout()
+
+plt.savefig(
+    "collision_execution_time.png",
+    dpi=300
+)
+
+print(
+    "Graph saved to "
+    "collision_execution_time.png"
 )
 
 plt.show()
