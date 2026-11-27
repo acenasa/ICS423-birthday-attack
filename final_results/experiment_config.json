@@ -1,0 +1,21 @@
+{
+  "python": "3.14.8 (tags/v3.14.8:8e6e75d, Sep 30 2026, 18:19:33) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "machine": "AMD64",
+  "processor": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+  "openssl": "OpenSSL 3.5.9 29 Sep 2026",
+  "matplotlib": "3.11.2",
+  "digest_lengths": [
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "trials_per_condition": 1000,
+  "message_format": "{bits}bit_trial{trial_number}_message{attempt}",
+  "timing_scope": "Search loop and result collection; excludes CSV writing and plotting",
+  "confidence_interval": "Normal approximation, mean +/- 1.96 * sample standard error; assumes ideal independent outputs"
+}
